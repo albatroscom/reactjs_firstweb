@@ -9,7 +9,43 @@ React 기본 작업 환경
 
 React CodeLab 에서 작업환경 설정을 할 때 사용 된 코드 입니다.
 
-## Edit 
+## Directory 구조
+
+# src
+#├── actions
+#│   ├── ActionTypes.js
+#│   ├── authentication.js
+#│   ├── index.js
+#│   ├── memo.js
+#│   └── search.js
+#├── components
+#│   ├── Authentication.js
+#│   ├── Header.js
+#│   ├── index.js
+#│   ├── Memo.js
+#│   ├── MemoList.js
+#│   ├── Search.js
+#│   └── Write.js
+#├── containers
+#│   ├── App.js
+#│   ├── Home.js
+#│   ├── index.js
+#│   ├── Login.js
+#│   ├── Register.js
+#│   └── Wall.js
+#├── index.js
+#└── reducers
+#    ├── authentication.js
+#    ├── index.js
+#    ├── memo.js
+#    └── search.js
+
+# https://github.com/erikras/react-redux-universal-hot-example : 디렉토리 구조는 이곳의 컨벤션을 따와서 사용한다.
+# components : 각 컴포넌트들
+# container : 라우터에서 보여줄 페이지
+# ActionTypes.js : redux에서 필요한 action type
+# reducer : 계정인증 / 메모 / 검색 부분
+
 
 
 ## 설치하기

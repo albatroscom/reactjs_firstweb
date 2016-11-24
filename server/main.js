@@ -1,8 +1,8 @@
 import express from 'express';
 import path from 'path';
 
-import WebpackDevServer from 'webpack-dev-server';
 import webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
 
 import morgan from 'morgan';            // HTTP REQUEST LOGGER
 import bodyparser from 'body-parser';   // PARSE HTML BODY
@@ -17,17 +17,15 @@ const app = express();
 const port = 3000;
 const devPort = 4000;
 
+app.use(morgan('dev'));
+app.use(bodyparser.json());
+
 /* mongodb connection */
 const db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', () => { console.log('Connected to mongodb server'); });
-mongoose.connect('mongodb://test:password@127.0.0.1:27017/database=');
-//mongoose.connect('mongodb://localhost/codelab');
-
-app.use('/', express.static(path.join(__dirname, './../public')));
-
-app.use(morgan('dev'));
-app.use(bodyparser.json());
+//mongoose.connect('mongodb://test:password@127.0.0.1:27017/database=');
+mongoose.connect('mongodb://localhost/codelab');
 
 /* use session */
 app.use(session({
@@ -36,19 +34,23 @@ app.use(session({
     saveUninitialized: true
 }));
 
+app.use('/', express.static(path.join(__dirname, './../public')));
+
+/* setup routers & static directory */
 app.use('/api', api);
 
+/* handle error */
 app.use(function(err, req, res, next) {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
 
-app.get('/hello', (req, res) => {
-    return res.send('Hello CodeLab');
-});
-
 app.listen(port, () => {
     console.log('Express is listening on port', port);
+});
+
+app.get('/hello', (req, res) => {
+    return res.send('Hello CodeLab');
 });
 
 if(process.env.NODE_ENV == 'development') {
