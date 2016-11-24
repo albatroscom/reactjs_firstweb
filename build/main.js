@@ -32,11 +32,17 @@ var _expressSession = require('express-session');
 
 var _expressSession2 = _interopRequireDefault(_expressSession);
 
+var _routes = require('./routes');
+
+var _routes2 = _interopRequireDefault(_routes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// PARSE HTML BODY
+// HTTP REQUEST LOGGER
+var app = (0, _express2.default)();
 
-var app = (0, _express2.default)(); // HTTP REQUEST LOGGER
+/* setup routers & static directory */
+// PARSE HTML BODY
 
 var port = 3000;
 var devPort = 4000;
@@ -61,6 +67,13 @@ app.use((0, _expressSession2.default)({
     resave: false,
     saveUninitialized: true
 }));
+
+app.use('/api', _routes2.default);
+
+app.use(function (err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
 app.get('/hello', function (req, res) {
     return res.send('Hello CodeLab');
